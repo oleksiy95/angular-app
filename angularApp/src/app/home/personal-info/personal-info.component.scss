@@ -1,0 +1,6 @@
+.personal-info {
+    .card-title, .card-text{
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

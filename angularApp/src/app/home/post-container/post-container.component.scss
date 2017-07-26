@@ -1,0 +1,10 @@
+.dropdown-toggle::after {
+    display:none
+}
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #5bc0de;
+}
+// .post-container {
+//     overflow: hidden;
+//     text-overflow: ellipsis;    
+// }
