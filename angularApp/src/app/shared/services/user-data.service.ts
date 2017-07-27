@@ -34,14 +34,4 @@ export class UserDataService {
         localStorage.removeItem('current_user');
         this.currentUserSubject.next(new User());
     }
-    
-
-    // getCurrentUser(): User {
-    //     if (this.login.isLoggedIn() && !this.currentUser) {
-    //         this.currentUserIdentityId = this.jwt.decodeToken().id;
-    //         this.userService.getUser(this.currentUserIdentityId).subscribe(data => this.currentUser = data);
-    //     }
-    //     return this.currentUser
-
-    // }
 }
