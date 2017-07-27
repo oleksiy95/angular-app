@@ -21,7 +21,7 @@
           <post-container [post]="post" [user]="currentUser" (onDeletePost)="deletePost($event)" *ngFor="let post of posts"></post-container>
         </div>
         <div class="col-sm-3">
-          <to-follow></to-follow>
+          <to-follow [currentUser]="currentUser"></to-follow>
         </div>        
       </div>
     </div>

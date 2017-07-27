@@ -23,7 +23,15 @@ export class UserService {
         return this.apiService.get(`/users/${id}/posts`);
     }
 
-    makePost(userId, post: Post) {
+    makePost(userId, post: Post): Observable<Post> {
         return this.apiService.post(`/users/${userId}/posts`, post);
+    }
+
+    suggestUsersToFollow(userId): Observable<User[]> {
+        return this.apiService.get(`/users/${userId}/follow`);
+    }
+
+    followTo(userId, followId): Observable<boolean> {
+        return this.apiService.get(`/users/${userId}/follow/${followId}`);
     }
 }

@@ -37,6 +37,7 @@ namespace WebApi.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<UserFollowers> Followers { get; set; }
     }
 }
 

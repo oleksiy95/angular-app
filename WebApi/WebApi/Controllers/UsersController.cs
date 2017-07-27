@@ -40,6 +40,27 @@ namespace WebApi.Controllers
             else return Ok(users);
         }
 
+
+        [HttpGet("{id}/follow")]
+        public async Task<IActionResult> SuggestUsersToFollow(int id)
+        {
+            var user = await _context.Users.Include(u => u.Followings).SingleOrDefaultAsync(u => u.UserId == id);
+            var users = await _context.Users.Where(u => !user.Followings.Any(f => f.FollowingId == u.UserId) && u.UserId != user.UserId).Include(u => u.Identity).ToArrayAsync();
+            var userModels = users.Select(Mapper.Map<UserViewModel>);
+
+
+            if (!users.Any()) { return NotFound("UserNotFound"); }
+            else return Ok(userModels);
+        }
+
+        [HttpGet("{id}/follow/{followId}")]
+        public async Task<IActionResult> Follow(int id, int followId)
+        {
+            _context.Followers.Add(new UserFollowers { FollowerId = id, FollowingId = followId });
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser([FromRoute] string id)

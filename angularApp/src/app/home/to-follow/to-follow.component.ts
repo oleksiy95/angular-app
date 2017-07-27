@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { UserService, User } from "../../shared/index";
 
 @Component({
   selector: 'to-follow',
@@ -6,10 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./to-follow.component.scss']
 })
 export class ToFollowComponent implements OnInit {
+  private users: User[];
+  private usersToSuggest: User[];
+  @Input() currentUser: User;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+    this.userService.suggestUsersToFollow(this.currentUser.userId).subscribe(data => {
+      this.users = data;
+      this.usersToSuggest = this.users.sort(() => 0.5 - Math.random()).slice(0, 3);
+    });    
   }
+
+  refresh() {
+    this.usersToSuggest = this.users.sort(() => 0.5 - Math.random()).slice(0, 3);
+  }
+
 
 }
