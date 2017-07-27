@@ -36,7 +36,9 @@ export class RegistrationComponent implements OnInit {
       ]],
       "password": [this.user.password, [
         Validators.required,
-
+      ]],
+      "userName": [this.user.userName, [
+        Validators.required
       ]],      
     });
   }

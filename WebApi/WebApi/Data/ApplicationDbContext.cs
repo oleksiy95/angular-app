@@ -15,6 +15,26 @@ namespace WebApi.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<UserFollowers>()
+                .HasKey(uf => new { uf.FollowerId, uf.FollowingId });
+
+            modelBuilder.Entity<UserFollowers>()
+                .HasOne(uf => uf.Follower)
+                .WithMany(u => u.Followers)
+                .HasForeignKey(uf => uf.FollowerId)
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserFollowers>()
+                .HasOne(uf => uf.Following)
+                .WithMany(u => u.Followings)
+                .HasForeignKey(uf => uf.FollowingId)
+                .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Restrict);
+        }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
     }

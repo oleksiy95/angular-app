@@ -200,6 +200,8 @@ namespace WebApi.Migrations
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Description");
+
                     b.Property<string>("IdentityId");
 
                     b.HasKey("UserId");
@@ -207,6 +209,19 @@ namespace WebApi.Migrations
                     b.HasIndex("IdentityId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.UserFollowers", b =>
+                {
+                    b.Property<int>("FollowerId");
+
+                    b.Property<int>("FollowingId");
+
+                    b.HasKey("FollowerId", "FollowingId");
+
+                    b.HasIndex("FollowingId");
+
+                    b.ToTable("UserFollowers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
@@ -259,6 +274,17 @@ namespace WebApi.Migrations
                     b.HasOne("WebApi.Models.Entities.AppUser", "Identity")
                         .WithMany()
                         .HasForeignKey("IdentityId");
+                });
+
+            modelBuilder.Entity("WebApi.Models.Entities.UserFollowers", b =>
+                {
+                    b.HasOne("WebApi.Models.Entities.User", "Follower")
+                        .WithMany("Followers")
+                        .HasForeignKey("FollowerId");
+
+                    b.HasOne("WebApi.Models.Entities.User", "Following")
+                        .WithMany("Followings")
+                        .HasForeignKey("FollowingId");
                 });
         }
     }

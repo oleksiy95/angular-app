@@ -11,7 +11,7 @@ namespace WebApi.ViewModels.Mappings
     {
         public ViewModelToEntityMappingProfile()
         {
-            CreateMap<RegistrationViewModel, AppUser>().ForMember(dist => dist.UserName, map => map.MapFrom(src => src.Email));
+            CreateMap<RegistrationViewModel, AppUser>();
 
             CreateMap<Post, PostViewModel>();
             CreateMap<PostViewModel, Post>();
@@ -19,7 +19,14 @@ namespace WebApi.ViewModels.Mappings
             CreateMap<User, UserViewModel>()
                 .ForMember(dist => dist.Email, map => map.MapFrom(src => src.Identity.Email))
                 .ForMember(dist => dist.FirstName, map => map.MapFrom(src => src.Identity.FirstName))
-                .ForMember(dist => dist.LastName, map => map.MapFrom(src => src.Identity.LastName));
+                .ForMember(dist => dist.LastName, map => map.MapFrom(src => src.Identity.LastName))
+                .ForMember(dist => dist.UserName, map => map.MapFrom(src => src.Identity.UserName));
+
+            CreateMap<User, UserStaticDataModel>()
+                .ForMember(dist => dist.Email, map => map.MapFrom(src => src.Identity.Email))
+                .ForMember(dist => dist.FirstName, map => map.MapFrom(src => src.Identity.FirstName))
+                .ForMember(dist => dist.LastName, map => map.MapFrom(src => src.Identity.LastName))
+                .ForMember(dist => dist.UserName, map => map.MapFrom(src => src.Identity.UserName));
         }
     }
 }

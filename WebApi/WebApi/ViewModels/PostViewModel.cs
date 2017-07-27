@@ -1,10 +1,13 @@
-﻿using System;
+﻿using FluentValidation.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi.ViewModels.Validations;
 
 namespace WebApi.ViewModels
 {
+    [Validator(typeof(PostViewModelValidator))]
     public class PostViewModel
     {
         public int PostId { get; set; }

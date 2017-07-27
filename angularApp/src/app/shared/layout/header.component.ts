@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService, UserDataService } from '../services';
 import { Subscription } from "rxjs/Subscription";
-import { User } from "../index";
+import { UserStaticData } from "../index";
 
 @Component({
     selector: 'layout-header',
@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
 
     status: boolean;
     subscription: Subscription;
-    currentUser: User;
+    currentUser: UserStaticData;
 
     ngOnInit() {
         this.subscription = this.login.authNavStatus$.subscribe(status => this.status = status);

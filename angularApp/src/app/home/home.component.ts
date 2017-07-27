@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { JwtService, User, UserDataService, Post, UserService, PostService } from "../shared/index";
+import { JwtService, UserStaticData, UserDataService, Post, UserService, PostService } from "../shared/index";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  currentUser: User;
+  currentUser: UserStaticData;
   posts: Post[];
   post: Post = new Post();
   postForm: FormGroup;

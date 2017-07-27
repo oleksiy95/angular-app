@@ -58,7 +58,7 @@ namespace WebApi.Controllers
             }
 
             // Serialize and return the response
-            var user = _mapper.Map<UserViewModel>(_context.Users.SingleOrDefault(u => u.IdentityId == userToVerify.Id));
+            var user = _mapper.Map<UserStaticDataModel>(_context.Users.SingleOrDefault(u => u.IdentityId == userToVerify.Id));
             var response = new
             {
                 id = identity.Claims.Single(c => c.Type == "id").Value,

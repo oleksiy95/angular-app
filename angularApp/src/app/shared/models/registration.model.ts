@@ -2,5 +2,6 @@ export class Registration {
     email;
     password;
     firstName;
-    lastName;    
+    lastName;
+    userName;    
 }

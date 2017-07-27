@@ -5,11 +5,12 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
 import { ApiService } from './api.service';
-import { User, Credentials, StaticData } from '../models';
+import { UserStaticData, Credentials } from '../models';
 import { Router } from "@angular/router";
 import { JwtService } from "./jwt.service";
 import { UserDataService } from "./user-data.service";
 import { Subject } from "rxjs/Subject";
+import { Registration } from "../index";
 
 @Injectable()
 export class LoginService {
@@ -22,30 +23,28 @@ export class LoginService {
     // public currentUser = this.currentUserSubject.asObservable().distinctUntilChanged();
 
     constructor(
-        private apiService: ApiService, 
-        private router: Router, 
+        private apiService: ApiService,
+        private router: Router,
         private jwt: JwtService,
         private userDataService: UserDataService
     ) {
         this._authNavStatusSource.next(!this.jwt.isTokenExpired());
     }
 
-    register(user: User): Observable<boolean> {
+    register(user: Registration): Observable<boolean> {
         return this.apiService.post('/accounts', user)
     }
 
     login(user: Credentials): Observable<boolean> {
-        let subject = new Subject<boolean>();
-        this.apiService.post('/auth', user)
-            .subscribe(data => {
+        return this.apiService.post('/auth', user)
+            .map(data => {
                 this.jwt.saveToken(data.auth_token)
                 this._authNavStatusSource.next(true);
-                this.userDataService.setCurrentUser().subscribe(data => {
-                    subject.next(data);
-                });
+                this.userDataService.setCurrentUser(data.user);
+                return true;
             });
-        return subject.asObservable();                  
-    }   
+
+    }
 
     logout() {
         this.jwt.destroyToken();
