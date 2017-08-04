@@ -4,18 +4,19 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { AuthGuard } from '../auth.guard';
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
-import { PostContainerComponent } from './post-container/post-container.component'
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { PostContainerComponent } from './post-container/post-container.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TrendsComponent } from './trends/trends.component';
 import { ToFollowComponent } from './to-follow/to-follow.component';
+import { MomentModule } from 'angular2-moment';
 
 const homeRouting: ModuleWithProviders = RouterModule.forChild([
   {
     path: 'home',
     component: HomeComponent,
     canActivate: [AuthGuard]
-  }])
+  }]);
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ const homeRouting: ModuleWithProviders = RouterModule.forChild([
     homeRouting,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    MomentModule
   ],
   declarations: [HomeComponent, PersonalInfoComponent, PostContainerComponent, TrendsComponent, ToFollowComponent],
   providers: [AuthGuard]

@@ -24,13 +24,13 @@ namespace WebApi.Data
 
             modelBuilder.Entity<UserFollowers>()
                 .HasOne(uf => uf.Follower)
-                .WithMany(u => u.Followers)
+                .WithMany(u => u.Followings)
                 .HasForeignKey(uf => uf.FollowerId)
                 .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Restrict);
 
             modelBuilder.Entity<UserFollowers>()
                 .HasOne(uf => uf.Following)
-                .WithMany(u => u.Followings)
+                .WithMany(u => u.Followers)
                 .HasForeignKey(uf => uf.FollowingId)
                 .OnDelete(Microsoft.EntityFrameworkCore.Metadata.DeleteBehavior.Restrict);
         }

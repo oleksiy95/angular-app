@@ -10,17 +10,21 @@ import { User, Post } from '../models';
 @Injectable()
 export class UserService {
     constructor (private apiService: ApiService) {}
-    
+
     getUsers(): Observable<User[]> {
         return this.apiService.get('/users');
     }
-    
+
     getUser(id): Observable<User> {
         return this.apiService.get(`/users/${id}`);
     }
 
     getUserPosts(id): Observable<Post[]> {
         return this.apiService.get(`/users/${id}/posts`);
+    }
+
+    getUserFollowingPosts(id): Observable<Post[]> {
+        return this.apiService.get(`/users/${id}/following/posts`);
     }
 
     makePost(userId, post: Post): Observable<Post> {
@@ -31,7 +35,7 @@ export class UserService {
         return this.apiService.get(`/users/${userId}/follow`);
     }
 
-    followTo(userId, followId): Observable<boolean> {
+    followTo(userId, followId): Observable<User> {
         return this.apiService.get(`/users/${userId}/follow/${followId}`);
     }
 }

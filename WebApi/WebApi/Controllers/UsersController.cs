@@ -44,7 +44,7 @@ namespace WebApi.Controllers
         [HttpGet("{id}/follow")]
         public async Task<IActionResult> SuggestUsersToFollow(int id)
         {
-            var user = await _context.Users.Include(u => u.Followings).SingleOrDefaultAsync(u => u.UserId == id);
+            var user = await _context.Users.Include(u => u.Followings).Include(u => u.Followers).SingleOrDefaultAsync(u => u.UserId == id);
             var users = await _context.Users.Where(u => !user.Followings.Any(f => f.FollowingId == u.UserId) && u.UserId != user.UserId).Include(u => u.Identity).ToArrayAsync();
             var userModels = users.Select(Mapper.Map<UserViewModel>);
 
@@ -56,9 +56,11 @@ namespace WebApi.Controllers
         [HttpGet("{id}/follow/{followId}")]
         public async Task<IActionResult> Follow(int id, int followId)
         {
-            _context.Followers.Add(new UserFollowers { FollowerId = id, FollowingId = followId });
+            _context.Followers.Add(new UserFollowers { FollowerId = id, FollowingId = followId });            
             await _context.SaveChangesAsync();
-            return Ok();
+            var followUser = await _context.Users.Include(u => u.Identity).SingleOrDefaultAsync(u => u.UserId == followId);
+            var followUserModel = Mapper.Map<UserViewModel>(followUser);
+            return Ok(followUserModel);
         }
 
         // GET: api/Users/5
@@ -88,6 +90,23 @@ namespace WebApi.Controllers
             if (user.Posts == null) return Ok(new List<Post>());
             var posts = user.Posts.OrderByDescending(p => p.Date).Select(Mapper.Map<PostViewModel>);
             return Ok(posts);
+        }
+
+        [HttpGet("{id}/following/posts")]
+        public async Task<IActionResult> GetUserFollowingPosts([FromRoute] int id)
+        {
+            var user = await _context.Users.Include(u => u.Followings).SingleOrDefaultAsync(u => u.UserId == id);
+            var posts = await _context.Posts
+                .Where(p => p.UserId == user.UserId || user.Followings.Any(f => f.FollowingId == p.UserId))
+                .Include(p => p.User.Identity)
+                .ToArrayAsync();
+            if (user == null)
+            {
+                return NotFound("User not Found");
+            }
+            if (user.Posts == null) return Ok(new List<Post>());
+            var postModels = posts.OrderByDescending(p => p.Date).Select(Mapper.Map<PostViewModel>);
+            return Ok(postModels);
         }
 
         [HttpPost("{id}/posts")]

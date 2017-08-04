@@ -279,11 +279,11 @@ namespace WebApi.Migrations
             modelBuilder.Entity("WebApi.Models.Entities.UserFollowers", b =>
                 {
                     b.HasOne("WebApi.Models.Entities.User", "Follower")
-                        .WithMany("Followers")
+                        .WithMany("Followings")
                         .HasForeignKey("FollowerId");
 
                     b.HasOne("WebApi.Models.Entities.User", "Following")
-                        .WithMany("Followings")
+                        .WithMany("Followers")
                         .HasForeignKey("FollowingId");
                 });
         }

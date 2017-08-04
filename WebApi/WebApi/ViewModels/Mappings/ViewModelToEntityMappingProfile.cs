@@ -13,7 +13,11 @@ namespace WebApi.ViewModels.Mappings
         {
             CreateMap<RegistrationViewModel, AppUser>();
 
-            CreateMap<Post, PostViewModel>();
+            CreateMap<Post, PostViewModel>()
+                .ForMember(dist => dist.UserName, map => map.MapFrom(src => src.User.Identity.UserName))
+                .ForMember(dist => dist.FirstName, map => map.MapFrom(src => src.User.Identity.FirstName))
+                .ForMember(dist => dist.LastName, map => map.MapFrom(src => src.User.Identity.LastName));
+
             CreateMap<PostViewModel, Post>();
 
             CreateMap<User, UserViewModel>()

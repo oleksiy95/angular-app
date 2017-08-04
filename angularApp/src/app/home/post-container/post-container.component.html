@@ -6,8 +6,8 @@
         <div class="media-body">
           <div class="clearfix">
             <div class="float-left">
-              <h6 class="mt-0">{{user.firstName}} {{user.lastName}}</h6>
-              <h6 class="card-subtitle mb-2 text-muted">{{user.userName}}</h6>
+              <h6 class="mt-0">{{post.firstName}} {{post.lastName}}</h6>
+              <h6 class="card-subtitle mb-2 text-muted">{{post.userName}}</h6>
             </div>
             <div ngbDropdown class="d-inline-block float-right">
               <button type="button" class="btn btn-outline-info btn-sm" id="more" ngbDropdownToggle>
@@ -20,7 +20,7 @@
             </div>
           </div>
           <p class="card-text">{{post.content}}</p>
-          <p class="card-text"><small class="text-muted">{{post.date | date:"medium"}}</small></p>
+          <p class="card-text"><small class="text-muted">{{post.date | amTimeAgo}}</small></p>
         </div>
       </div>
     </div>

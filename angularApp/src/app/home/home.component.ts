@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { JwtService, UserStaticData, UserDataService, Post, UserService, PostService } from "../shared/index";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { JwtService, UserStaticData, UserDataService, Post, UserService, PostService } from '../shared';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -22,18 +22,19 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.userDataService.getCurrentUser();
-    if (this.currentUser.userId)
-      this.userService.getUserPosts(this.currentUser.userId).subscribe(data => {
+    if (this.currentUser.userId) {
+      this.userService.getUserFollowingPosts(this.currentUser.userId).subscribe(data => {
         this.posts = data;
-      })
+      });
+    }
     this.buildForm();
   }
 
   buildForm() {
     this.postForm = this.fb.group({
-      "content": [this.post.content, [
+      'content': [this.post.content, [
         Validators.required,
-      ]],      
+      ]],
     });
   }
 
@@ -42,13 +43,13 @@ export class HomeComponent implements OnInit {
       .subscribe(data => {
         this.posts.unshift(data);
         this.postForm.reset();
-      })
+      });
   }
 
-  deletePost(id: number){
+  deletePost(id: number) {
     this.postService.deletePost(id).subscribe(data => {
       this.posts = this.posts.filter(p => p.postId !== id);
-    })
+    });
   }
 
 }

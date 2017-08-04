@@ -1,17 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { HttpModule, XHRBackend, Http } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeModule } from './home/home.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent, FooterComponent, ApiService, UserService, LoginService, UserDataService, JwtService, ModalWindowComponent, PostService } from './shared';
+import {
+  HeaderComponent,
+  FooterComponent,
+  ApiService,
+  UserService,
+  LoginService,
+  UserDataService,
+  JwtService,
+  ModalWindowComponent,
+  PostService } from './shared';
 import { UsersModule } from './users';
-import { PostsModule } from './posts';
 import { AccountModule } from './account';
-import { AuthenticatedHttpService } from "./authenticate-xhr.backend";
-
+import { AuthenticatedHttpService } from './authenticate-xhr.backend';
 
 @NgModule({
   declarations: [
@@ -27,8 +34,7 @@ import { AuthenticatedHttpService } from "./authenticate-xhr.backend";
     NgbModule.forRoot(),
     HomeModule,
     UsersModule,
-    PostsModule,
-    AccountModule
+    AccountModule,
   ],
   providers: [
     ApiService,
@@ -38,7 +44,7 @@ import { AuthenticatedHttpService } from "./authenticate-xhr.backend";
     JwtService,
     PostService,
     {
-      provide: Http, 
+      provide: Http,
       useClass: AuthenticatedHttpService
     }
   ],

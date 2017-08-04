@@ -2,5 +2,8 @@ export class Post {
     postId;
     userId;
     content;
-    date : Date;
+    date: Date;
+    userName;
+    firstName;
+    lastName;
 }

@@ -7,26 +7,26 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class ApiService {
-  constructor(private http: Http) {}
+  constructor(private http: Http) { }
 
   private setHeaders(): Headers {
     const headersConfig = {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     };
-    
-    if(localStorage.getItem('auth_token')) headersConfig['Authorization'] = `Bearer ${localStorage.getItem('auth_token')}`;
+
+    if (localStorage.getItem('auth_token')) headersConfig['Authorization'] = `Bearer ${localStorage.getItem('auth_token')}`;
     return new Headers(headersConfig);
   }
 
   private formatErrors(error: any) {
-     return Observable.throw(error.json());
+    return Observable.throw(error.json());
   }
 
   get(path: string, params: URLSearchParams = new URLSearchParams()): Observable<any> {
     return this.http.get(`${environment.api_url}${path}`, { headers: this.setHeaders(), search: params })
-    .catch(this.formatErrors)
-    .map((res: Response) => res.json());
+      .catch(this.formatErrors)
+      .map((res: Response) => res.json());
   }
 
   put(path: string, body: Object = {}): Observable<any> {
@@ -35,8 +35,8 @@ export class ApiService {
       JSON.stringify(body),
       { headers: this.setHeaders() }
     )
-    .catch(this.formatErrors)
-    .map((res: Response) => res.json());
+      .catch(this.formatErrors)
+      .map((res: Response) => res.json());
   }
 
   post(path: string, body: Object = {}): Observable<any> {
@@ -45,8 +45,8 @@ export class ApiService {
       JSON.stringify(body),
       { headers: this.setHeaders() }
     )
-    .catch(this.formatErrors)
-    .map((res: Response) => res.json());
+      .catch(this.formatErrors)
+      .map((res: Response) => res.json());
   }
 
   delete(path): Observable<any> {
@@ -54,7 +54,7 @@ export class ApiService {
       `${environment.api_url}${path}`,
       { headers: this.setHeaders() }
     )
-    .catch(this.formatErrors)
-    .map((res: Response) => res.json());
+      .catch(this.formatErrors)
+      .map((res: Response) => res.json());
   }
 }

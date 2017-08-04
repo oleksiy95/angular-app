@@ -6,10 +6,12 @@
         <img class="d-flex mr-3 rounded-circle" style="width: 35px; height: 35px;" src="assets/avatar.png" alt="image">
         <div class="media-body">
           <h6 class="mt-0">{{suggestedUser.firstName}} {{suggestedUser.lastName}} <span class="text-muted">{{suggestedUser.userName}}</span></h6>
-          <button type="button flat-right" (click)="subscribe(suggestedUser.userId)" class="btn btn-outline-info btn-sm">Follow</button>
+          <button type="button flat-right" (click)="follow(suggestedUser.userId)" class="btn btn-outline-info btn-sm">Follow</button>
         </div>
       </div>
     </div>
   </div>
-  <div class="card-footer text-muted text-center">View all</div>
+  <div class="card-footer text-muted text-center">
+    <button type="button flat-right" (click)="viewAllSuggestions()" class="btn btn-outline-info btn-sm">View All</button>
+  </div>
 </div>

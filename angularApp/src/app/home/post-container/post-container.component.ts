@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Post, User, ModalWindowComponent } from "../../shared/index";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Post, User, ModalWindowComponent } from '../../shared';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 })
 export class PostContainerComponent implements OnInit {
 @Input() post: Post;
-@Input() user: User;
+@Input() currentUser: User;
 @Output() onDeletePost = new EventEmitter<number>();
   constructor(private modalService: NgbModal) { }
 
@@ -19,9 +19,11 @@ export class PostContainerComponent implements OnInit {
 
   deletePost() {
     const modalRef = this.modalService.open(ModalWindowComponent);
-    modalRef.componentInstance.content = 'Are you sure you want to delete post?'
+    modalRef.componentInstance.content = 'Are you sure you want to delete post?';
     modalRef.result.then(data => {
-      if(data) this.onDeletePost.emit(this.post.postId);
-    })
+      if (data) {
+        this.onDeletePost.emit(this.post.postId);
+      }
+    });
   }
 }
